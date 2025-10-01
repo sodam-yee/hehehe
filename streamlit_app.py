@@ -1,90 +1,31 @@
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
 import streamlit as st
 
-st.title("🎈 Sodam first app")
+# 예제 데이터셋 로드 (타이타닉)
+df = sns.load_dataset("titanic")
 
-st.write("반갑습니다. 저는 1-5 현하윤입니다.")
-st.success('배고파요')
-st.info('으아아아아 저녁ㄱㄱㄱㄱㄱ')
-st.image("https://pbs.twimg.com/media/GdpDqQZWMAAFOP6.jpg:large")
+# 성별에 따른 생존률 막대그래프
+st.subheader("🎯 성별에 따른 생존률 시각화")
 
-st.markdown("---")
+fig, ax = plt.subplots()
+sns.barplot(data=df, x="sex", y="survived", ax=ax)
+ax.set_title("성별 생존률")
+st.pyplot(fig)
 
-st.markdown("오. 내 *친구*.")
+# 나이와 요금의 관계 산점도
+st.subheader("🌀 나이와 요금 간의 관계")
 
-st.title("뭐요")
-st.header("착 한 아 이")
-st.subheader("hehehehehe")
+fig2, ax2 = plt.subplots()
+sns.scatterplot(data=df, x="age", y="fare", hue="survived", ax=ax2)
+ax2.set_title("나이 vs 요금")
+st.pyplot(fig2)
 
-st.markdown("---")
+# 박스플롯으로 등급별 요금 분포
+st.subheader("📦 객실 등급별 요금 분포")
 
-st.link_button("ddd", "https://youtu.be/Fokx686r55I")
-
-st.code("""
-import streamlit as st
-st.title('Hello World')
-""", language="python")
-
-st.link_button("[꾸몽] 팀샐러드 화면 조정", 'https://youtu.be/S_UtMc-gYeE?si=xkQ58GNhYDF4qbLt')
-
-
-st.markdown('---')
-
-tab1, tab2 = st.tabs(['탭1','탭2'])
-
-with tab1:
-    st.write("탭1")
-
-    color = st.selectbox("좋아하는 색을 선택하세요", ["빨강", "초록", "파랑"])
-    st.write("선택한 색상:", color)
-
-    if color == "빨강":
-        st.error("빨강")
-    
-    subjects = st.multiselect("관심 있는 과목을 선택하세요", ["수학", "영어", "과학"])
-    st.write("선택한 과목:", subjects)
-
-with tab2:
-    st.write("귀하의 컴퓨터를 털어가는 것에 동의하십니까?")
-
-    agree = st.checkbox("위 조건에 동의합니다")
-    if agree:
-        st.write("감사합니다! 계속 진행합니다.")
-
-    gender = st.radio("옆 사람의 성별을 선택하세요", ["남성", "여성", "사람이 아닙니다"])
-    st.write("선택한 성별:", gender)
-
-
-
-
-
-
-st.sidebar.title("사이드바")
-st.sidebar.write("hi")
-st.sidebar.write("hehehe")
-
-st.markdown('---')
-
-age = st.number_input("나이를 입력해주세요", step=1)
-
-st.write(2026-age)
-st.write(f"{2026-age}년도에 태어나셨군요!")
-
-with st.expander("ℹ️ 자세한 설명 보기"):
-    st.write("여기에 상세 설명이나 보조 정보를 넣을 수 있습니다.")
-
-
-
-
-
-
-
-
-level = st.slider("난이도를 선택하세요", 1, 10, 1)
-st.write("선택한 난이도:", level)
-
-date = st.date_input("날짜를 선택하세요")
-st.write("선택한 날짜:", date)
-
-
-
-
+fig3, ax3 = plt.subplots()
+sns.boxplot(data=df, x="pclass", y="fare", ax=ax3)
+ax3.set_title("등급별 요금 박스플롯")
+st.pyplot(fig3)
